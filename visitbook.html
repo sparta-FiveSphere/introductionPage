@@ -4,16 +4,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SPLIX</title>
+    <title>visitbook</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="/visit_style.css" />
 
-    <script>
-        let rowCount = 1;
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+        import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
 
-        function addComment() {
+        const firebaseConfig = {
+          apiKey: ${YOUR_API_KEY},
+          authDomain: ${AUTH_DOMAIN},
+          projectId: "{PRJECT_ID}",
+          storageBucket: "4{PROJECT_ID}.firebasestorage.app",
+          messagingSenderId: "",
+          appId: "{APPID}",
+          measurementId: ""
+        };
+      
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        $(document).ready(async () => {
+            let rowCount = 1;
+            const docs = await getDocs(collection(db, "visits"));
+
+            docs.forEach((doc) => {
+                const row = doc.data();
+                const nickname = row['nickname'];
+                const comment = row['comment'];
+                const date = row['date'];
+
+                const temp_tr = `
+                    <tr id="row-${doc.id}">
+                        <th scope="row">${rowCount}</th>
+                        <td>${nickname}</td>
+                        <td>${comment}</td>
+                        <td>${date}</td>
+                        <td>
+                            <button type="button" class="btn-close" aria-label="Close" onclick="deleteComment('${doc.id}')"></button>
+                        </td>
+                    </tr>
+                `;
+                rowCount++;
+                $('#record').append(temp_tr);
+            });
+        });
+
+        async function addComment() {
             let nickname = $('#nickname').val();
             let comment = $('#comment').val();
 
@@ -25,29 +67,35 @@
             var date = new Date();
             let today = `${date.getFullYear()}.${date.getMonth() + 1}.${date.getDate()}`;
 
-            let temp = `
-                <tr id="row-${rowCount}">
-                    <th scope="row">${rowCount}</th>
-                    <td>${nickname}</td>
-                    <td>${comment}</td>
-                    <td>${today}</td>
-                    <td>
-                        <button type="button" class="btn-close" aria-label="Close" onclick="deleteComment(${rowCount})"></button>
-                    </td>
-                </tr>
-            `;
-            $('#record').append(temp);
+            const docData = {
+                nickname: nickname,
+                comment: comment,
+                date: today
+            };
 
-            rowCount++;
-            $('#nickname').val("");
-            $('#comment').val("");
-            alert("등록되었습니다.");
+            try {
+                await addDoc(collection(db, "visits"), docData);
+                $('#nickname').val("");
+                $('#comment').val("");
+                alert("등록되었습니다.");
+                location.reload();
+            } catch (error) {
+                console.error("Error adding document: ", error);
+            }
         }
 
-        function deleteComment(id) {
-            $(`#row-${id}`).remove();
-            alert("삭제되었습니다.");
+        async function deleteComment(docId) {
+            try {
+                await deleteDoc(doc(db, "visits", docId));
+                $(`#row-${docId}`).remove();
+                alert("삭제되었습니다.");
+            } catch (error) {
+                console.error("Error deleting document: ", error);
+            }
         }
+
+        window.addComment = addComment;
+        window.deleteComment = deleteComment;
     </script>
 </head>
 
