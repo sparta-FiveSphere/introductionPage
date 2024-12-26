@@ -36,7 +36,7 @@
         // Firebase 구성 정보 설정
         // For Firebase JS SDK v7.20.0 and later, measurementId is optional
         const firebaseConfig = {
-
+            
         };
 
         // Firebase 인스턴스 초기화
@@ -65,9 +65,9 @@
                             document.getElementById("profileRole").textContent = `ROLE: ${data.role}`;
                             document.getElementById("profileMbti").textContent = `MBTI: ${data.mbti}`;
 
-                            // 이미지 경로 설정 (documentId 기반)
+                            // 이미지 URL을 Firebase에서 가져와서 설정
                             const imageElement = document.getElementById("profileImage");
-                            imageElement.src = `images/members/${documentId}.jpg`;
+                            imageElement.src = data.image; // Firestore에서 가져온 이미지 URL을 사용
                         } else {
                             console.error("No such document!");
                         }
@@ -104,8 +104,7 @@
         <div class="row">
             <div class="col-12 text-center">
                 <div class="intro">
-                    <h2 id="profileName"> </h2>
-                    <p id="profileRole">Role: </p>
+                    <h2 id="profileName"> </h2> 
                     <div class="hello">
                         <h5 id="profileGreeting"></h5>
                     </div>
@@ -113,6 +112,7 @@
                 <div>
                     <img id="profileImage" alt="멤버 이미지" style="max-width: 200px; border-radius: 10px;">
                 </div>
+                <p id="profileRole">Role: </p>
                 <p id="profileMbti">MBTI: </p>
             </div>
         </div>
