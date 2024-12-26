@@ -75,7 +75,7 @@
                             document.getElementById("profileMovies").textContent = `좋아하는 영화: ${data.movies}`;
                             document.getElementById("profileFoods").textContent = `좋아하는 음식: ${data.foods}`;
                             document.getElementById("profileHobby").textContent = `취미: ${data.hobby}`;
-                            console.log(data);
+                            //console.log(data);
                             // 이미지 URL을 Firebase에서 가져와서 설정
                             const imageElement = document.getElementById("profileImage");
                             imageElement.src = data.image; // Firestore에서 가져온 이미지 URL을 사용
@@ -135,7 +135,6 @@
                 <p id="profileMovies">좋아하는 영화: </p>
                 <p id="profileFoods">좋아하는 음식: </p>
                 <p id="profileHobby">취미: </p>
-                <p id="profileHobby">1: </p>
             </div>
         </div>
     </div>
