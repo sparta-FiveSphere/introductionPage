@@ -93,6 +93,14 @@ body {
     margin: 0;
 }
 
+.card-img-top {
+    width: 100%; /* 너비는 현재 만족스러우므로 유지 */
+    height: auto; /* 기본적으로 자동 설정 */
+    aspect-ratio: 1 / 1; /* 1:1 비율 유지 */
+    object-fit: cover; /* 이미지의 비율을 유지하면서 잘 맞도록 자르기 */
+    display: block;
+}
+
 @media (max-width: 768px) {
     .card {
         flex: 1 1 calc(50% - 20px);
