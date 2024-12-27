@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>개인 페이지</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <style>
+            body {
+                margin: 0;
+                font-family: 'Gowun Dodum', serif;
+                background-color: #fdf6e3;
+                color: #333;
+                line-height: 1.8;
+            }
+    
+            .header {
+                text-align: center;
+                padding: 60px 20px;
+                background: linear-gradient(to right, #ff9a9e, #fad0c4);
+                color: #333;
+            }
+    
+            .header h1 {
+                font-size: 3.5em;
+                margin: 0;
+                color: #444;
+            }
+    
+            .header p {
+                margin: 10px 0 0;
+                color: #666;
+            }
+    
+            .content {
+                max-width: 900px;
+                margin: 40px auto;
+                padding: 20px;
+                background: #fffaf0;
+                border-radius: 10px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            }
+    
+            .section {
+                margin-bottom: 40px;
+            }
+    
+            .section h2 {
+                font-size: 2em;
+                border-bottom: 2px solid #ff9a9e;
+                display: inline-block;
+                margin-bottom: 15px;
+                color: #444;
+            }
+    
+            .profile-container {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 20px;
+                justify-content: center;
+            }
+    
+            .profile-card {
+                background: #ffe5d9;
+                border: 1px solid #ffc4b3;
+                border-radius: 10px;
+                padding: 20px;
+                width: 280px;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                text-align: center;
+            }
+    
+            .profile-card img {
+                width: 100px;
+                height: 100px;
+                border-radius: 50%;
+                margin-bottom: 15px;
+                border: 3px solid #fad0c4;
+            }
+    
+            .profile-card h3 {
+                margin: 10px 0;
+                font-size: 1.5em;
+                color: #444;
+            }
+    
+            .profile-card p {
+                font-size: 1em;
+                color: #666;
+            }
+    
+            .profile-card a {
+                display: inline-block;
+                margin-top: 10px;
+                font-size: 0.9em;
+                color: #ff9a9e;
+                text-decoration: none;
+                font-weight: bold;
+            }
+    
+            .profile-card a:hover {
+                text-decoration: underline;
+            }
+    
+            @media (max-width: 768px) {
+                .profile-container {
+                    flex-direction: column;
+                    align-items: center;
+                }
+    
+                .content {
+                    padding: 15px;
+                }
+            }
+        </style>
+    <script type="module">
+        // Firebase SDK 라이브러리 가져오기
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+        import { collection, addDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        import { getDocs } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+
+        // Firebase 구성 정보 설정
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+            apiKey: "AIzaSyAZbTk4PDelAFRCNx_TV057LapBxOA64Ys",
+            authDomain: "five-spheres.firebaseapp.com",
+            projectId: "five-spheres",
+            storageBucket: "five-spheres.firebasestorage.app",
+            messagingSenderId: "766256056992",
+            appId: "1:766256056992:web:c8081af4febae25de957c5",
+            measurementId: "G-CW9FZJGY61"
+          };
+
+        // Firebase 인스턴스 초기화
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // URL 파라미터에서 document_id 가져오기
+        const urlParams = new URLSearchParams(window.location.search);
+        const documentId = urlParams.get("document_id");
+
+        // Firestore에서 데이터 가져오기
+        async function getMemberData(documentId) {
+            if (!documentId) {
+                console.error("Invalid document ID.");
+            } else {
+                const docRef = doc(db, "profile", documentId);
+                getDoc(docRef)
+                    .then((docSnap) => {
+                        if (docSnap.exists()) {
+                            const data = docSnap.data();
+
+                            // 업데이트: 멤버 이름으로 h4 내용 설정
+                            document.getElementById("profileGreeting").textContent = `안녕하세요. ${data.name}의 개인 페이지입니다.`;
+
+                            document.getElementById("profileName").textContent = `이름: ${data.name}`;
+                            document.getElementById("profileTags").textContent = `태그: ${data.tags}`;
+                            document.getElementById("profileWord").textContent = `한마디: ${data.word}`;
+                            document.getElementById("profileMbti").textContent = `MBTI: ${data.mbti}`;
+                            document.getElementById("profileContact").textContent = `블로그: ${data.contact}`;
+                            document.getElementById("profileLanguages").textContent = `공부한 언어: ${data.languages}`;
+                            document.getElementById("profileInterest").textContent = `관심 분야: ${data.interest}`;
+                            document.getElementById("profileMovies").textContent = `좋아하는 영화: ${data.movies}`;
+                            document.getElementById("profileFoods").textContent = `좋아하는 음식: ${data.foods}`;
+                            document.getElementById("profileHobby").textContent = `취미: ${data.hobby}`;
+                            //console.log(data);
+                            // 이미지 URL을 Firebase에서 가져와서 설정
+                            const imageElement = document.getElementById("profileImage");
+                            imageElement.src = data.image; // Firestore에서 가져온 이미지 URL을 사용
+                        } else {
+                            console.error("No such document!");
+                        }
+                    })
+                    .catch((error) => {
+                        console.error("Error getting document:", error);
+                    });
+            }
+        };
+
+
+
+        // 가져온 데이터를 HTML에 표시하는 함수
+        function displayMemberData(memberData) {
+            const profileName = document.getElementById("profileName");
+            const profileTags = document.getElementById("profileTags");
+            const profileMbti = document.getElementById("profileMbti");
+            const profileContact = document.getElementById("profileContact");
+            const profileLanguages = document.getElementById("profileLanguages");
+            const profileInterest = document.getElementById("profileInterest");
+            const profileMovies = document.getElementById("profileMovies");
+            const profileFoods = document.getElementById("profileFoods");
+            const profileHobby = document.getElementById("profileHobby");
+
+            profileName.textContent = "이름: " + memberData.name;
+            profileTags.textContent = "태그: " + memberData.tags;
+            profileWord.textContent = "한마디: " + memberData.word;
+            profileMbti.textContent = "MBTI: " + memberData.mbti;
+            profileContact.textContent = "블로그: " + memberData.contact;
+            profileLanguages.textContent = "공부한 언어: " + memberData.languages;
+            profileInterest.textContent = "관심 분야: " + memberData.interest;
+            profileMovies.textContent = "좋아하는 영화: " + memberData.movies;
+            profileFoods.textContent = "좋아하는 음식: " + memberData.foods;
+            profileHoobby.textContent = "취미: " + memberData.hobby;
+        }
+
+        // 페이지 로드 시 해당 멤버의 데이터 불러오기
+        getMemberData(documentId);
+
+    </script>
+</head>
+
+<body>
+    <div class="header">
+        <h1>Profile</h1>
+        <p>개인페이지입니다!</p>
+    </div>
+
+    <div class="content">
+        <div class="section">
+            <h2>5조</h2>
+            <div class="profile-container">
+                <div class="profile-card">
+                    <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FApvIN%2FbtsLxMCg8HZ%2FrFBh7b3ycKTY4tOrdyhGzk%2Fimg.jpg" alt="Profile Photo">
+                    <h3 id="profileName"></h3>
+                    <p id="profileTags"><strong>태그:</strong> </p>
+                    <p id="profileMbti"><strong>MBTI:</strong> </p>
+                    <p id="profileWord"><strong>한마디:</strong> </p>
+                    <p id="profileLanguages"><strong>공부한 언어:</strong> </p>
+                    <p id="profileInterest"><strong>관심분야:</strong></p>
+                    <p id="profileMovies"><strong>좋아하는 영화:</strong></p>
+                    <p id="profileFoods"><strong>좋아하는 음식:</strong></p>
+                    <p id="profileHobby"><strong>취미:</strong></p>
+                    <a id="profileContact" href="https://cusk09.tistory.com/" target="_blank"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
