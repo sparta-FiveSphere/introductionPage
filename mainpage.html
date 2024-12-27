@@ -81,13 +81,13 @@
         import { getFirestore, doc, getDoc, collection, addDoc, getDocs, deleteDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
 
         const firebaseConfig = {
-            apiKey: "AIzaSyAZbTk4PDelAFRCNx_TV057LapBxOA64Ys",
-            authDomain: "five-spheres.firebaseapp.com",
-            projectId: "five-spheres",
-            storageBucket: "five-spheres.firebasestorage.app",
-            messagingSenderId: "766256056992",
-            appId: "1:766256056992:web:c8081af4febae25de957c5",
-            measurementId: "G-CW9FZJGY61"
+            apiKey: `${YOUR_API_KEY}`,
+            authDomain: `${AUTH_DOMAIN}`,
+            projectId: `${PROJECT_ID}`,
+            storageBucket: `${STORAGE_BUCKET}`,
+            messagingSenderId: `${MESSAGINGSENDER_ID}`,
+            appId: `${APP_ID}`,
+            measurementId: `${MEASUREMENT_ID}`
         };
 
         const app = initializeApp(firebaseConfig);
@@ -95,19 +95,19 @@
 
         const teamMembers = [   
             { name: "김수환", role: "팀장", documentId: 1, 
-                imageUrl : "https://velog.velcdn.com/images/sshkim1013/post/04470131-b516-43c4-9f1c-22f83fb78e82/image.jpg"
+                imageUrl: "https://yt3.googleusercontent.com/kIwffqmzJJiPxzk60GJQoNONu3RGQCBGlzlWhA8AEFYg8IQg9xp_vzroskXQ3dIR64aNt7a1eQ=s900-c-k-c0x00ffffff-no-rj"
             },
             { name: "손미진", role: "팀원", documentId: 2,
-                imageUrl : "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FkAn4l%2FbtsLADEcotv%2FUDMyyyqd2bDRNFxK07Iv7K%2Fimg.jpg"
+                imageUrl: "https://yt3.googleusercontent.com/kIwffqmzJJiPxzk60GJQoNONu3RGQCBGlzlWhA8AEFYg8IQg9xp_vzroskXQ3dIR64aNt7a1eQ=s900-c-k-c0x00ffffff-no-rj"
              },
             { name: "봉수현", role: "팀원", documentId: 3, 
-                imageUrl : "https://velog.velcdn.com/images/siha_014/post/9dc2b786-ee94-4287-a789-0943001975e8/image.jpg"
+                imageUrl: "https://yt3.googleusercontent.com/kIwffqmzJJiPxzk60GJQoNONu3RGQCBGlzlWhA8AEFYg8IQg9xp_vzroskXQ3dIR64aNt7a1eQ=s900-c-k-c0x00ffffff-no-rj"
              },
             { name: "정재민", role: "팀원", documentId: 4,
                 imageUrl: "https://yt3.googleusercontent.com/kIwffqmzJJiPxzk60GJQoNONu3RGQCBGlzlWhA8AEFYg8IQg9xp_vzroskXQ3dIR64aNt7a1eQ=s900-c-k-c0x00ffffff-no-rj"
              },
             { name: "조성준", role: "팀원", documentId: 5,
-                imageUrl: "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FApvIN%2FbtsLxMCg8HZ%2FrFBh7b3ycKTY4tOrdyhGzk%2Fimg.jpg"
+                imageUrl: "https://yt3.googleusercontent.com/kIwffqmzJJiPxzk60GJQoNONu3RGQCBGlzlWhA8AEFYg8IQg9xp_vzroskXQ3dIR64aNt7a1eQ=s900-c-k-c0x00ffffff-no-rj"
              }
         ];
 
