@@ -43,9 +43,13 @@
 
                 if (docSnap.exists()) {
                     const data = docSnap.data();
-                    const cleanData = Object.fromEntries(
-                        Object.entries(data).map(([key, value]) => [key.trim(), value])
-                    );
+                    const cleanData = { };
+                    for (const key in data) { // data 객체의 key로 반복문
+                        if (data.hasOwnProperty(key)) { // 객체 'data'가 해당 key를 직접 소유하는지 확인
+                            const trimmedKey = key.trim(); // key에서 공백 제거
+                            cleanData[trimmedKey] = data[key]; // 정리된 key와 값으로 새로운 객체 생성
+                        }
+                    }
 
                     document.getElementById("profileName").textContent = `이름: ${cleanData.name}`;
                     document.getElementById("profileMbti").textContent = `MBTI: ${cleanData.mbti}`;
