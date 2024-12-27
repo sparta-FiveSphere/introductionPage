@@ -8,114 +8,122 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-        <style>
-            body {
-                margin: 0;
-                font-family: 'Gowun Dodum', serif;
-                background-color: #fdf6e3;
-                color: #333;
-                line-height: 1.8;
-            }
-    
-            .header {
-                text-align: center;
-                padding: 60px 20px;
-                background: linear-gradient(to right, #ff9a9e, #fad0c4);
-                color: #333;
-            }
-    
-            .header h1 {
-                font-size: 3.5em;
-                margin: 0;
-                color: #444;
-            }
-    
-            .header p {
-                margin: 10px 0 0;
-                color: #666;
-            }
-    
-            .content {
-                max-width: 900px;
-                margin: 40px auto;
-                padding: 20px;
-                background: #fffaf0;
-                border-radius: 10px;
-                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            }
-    
-            .section {
-                margin-bottom: 40px;
-            }
-    
-            .section h2 {
-                font-size: 2em;
-                border-bottom: 2px solid #ff9a9e;
-                display: inline-block;
-                margin-bottom: 15px;
-                color: #444;
-            }
-    
+    <style>
+        /*폰트 가져오기*/
+        @import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Gowun+Dodum&family=Parkinsans:wght@300..800&display=swap');
+
+        /*폰트 적용*/
+        * {
+            font-family: "Gowun Dodum", serif;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Gowun Dodum', serif;
+            background-color: #fdf6e3;
+            color: #333;
+            line-height: 1.8;
+        }
+
+        .header {
+            text-align: center;
+            padding: 60px 20px;
+            background: linear-gradient(to right, #ff9a9e, #fad0c4);
+            color: #333;
+        }
+
+        .header h1 {
+            font-size: 3.5em;
+            margin: 0;
+            color: #444;
+        }
+
+        .header p {
+            margin: 10px 0 0;
+            color: #666;
+        }
+
+        .content {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px;
+            background: #fffaf0;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section h2 {
+            font-size: 2em;
+            border-bottom: 2px solid #ff9a9e;
+            display: inline-block;
+            margin-bottom: 15px;
+            color: #444;
+        }
+
+        .profile-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .profile-card {
+            background: #ffe5d9;
+            border: 1px solid #ffc4b3;
+            border-radius: 10px;
+            padding: 20px;
+            width: 280px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .profile-card img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 15px;
+            border: 3px solid #fad0c4;
+        }
+
+        .profile-card h3 {
+            margin: 10px 0;
+            font-size: 1.5em;
+            color: #444;
+        }
+
+        .profile-card p {
+            font-size: 1em;
+            color: #666;
+        }
+
+        .profile-card a {
+            display: inline-block;
+            margin-top: 10px;
+            font-size: 0.9em;
+            color: #ff9a9e;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .profile-card a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
             .profile-container {
-                display: flex;
-                flex-wrap: wrap;
-                gap: 20px;
-                justify-content: center;
+                flex-direction: column;
+                align-items: center;
             }
-    
-            .profile-card {
-                background: #ffe5d9;
-                border: 1px solid #ffc4b3;
-                border-radius: 10px;
-                padding: 20px;
-                width: 280px;
-                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-                text-align: center;
+
+            .content {
+                padding: 15px;
             }
-    
-            .profile-card img {
-                width: 100px;
-                height: 100px;
-                border-radius: 50%;
-                margin-bottom: 15px;
-                border: 3px solid #fad0c4;
-            }
-    
-            .profile-card h3 {
-                margin: 10px 0;
-                font-size: 1.5em;
-                color: #444;
-            }
-    
-            .profile-card p {
-                font-size: 1em;
-                color: #666;
-            }
-    
-            .profile-card a {
-                display: inline-block;
-                margin-top: 10px;
-                font-size: 0.9em;
-                color: #ff9a9e;
-                text-decoration: none;
-                font-weight: bold;
-            }
-    
-            .profile-card a:hover {
-                text-decoration: underline;
-            }
-    
-            @media (max-width: 768px) {
-                .profile-container {
-                    flex-direction: column;
-                    align-items: center;
-                }
-    
-                .content {
-                    padding: 15px;
-                }
-            }
-        </style>
+        }
+    </style>
     <script type="module">
         // Firebase SDK 라이브러리 가져오기
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
@@ -133,7 +141,7 @@
             messagingSenderId: "766256056992",
             appId: "1:766256056992:web:c8081af4febae25de957c5",
             measurementId: "G-CW9FZJGY61"
-          };
+        };
 
         // Firebase 인스턴스 초기화
         const app = initializeApp(firebaseConfig);
@@ -154,15 +162,26 @@
                         if (docSnap.exists()) {
                             const data = docSnap.data();
 
+                            // 키 공백 제거
+                            const cleanData = {};
+                            for (const key in data) {
+                                if (data.hasOwnProperty(key)) {
+                                    const trimmedKey = key.trim(); // 키의 앞뒤 공백 제거
+                                    cleanData[trimmedKey] = data[key];
+                                }
+                            }
+
                             // 업데이트: 멤버 이름으로 h4 내용 설정
-                            document.getElementById("profileName").textContent = `이름: ${data.name}`;
-                            document.getElementById("profileMbti").textContent = `MBTI: ${data.mbti}`;
-                            document.getElementById("profileContact").textContent = `블로그: ${data.contact}`;
-                            document.getElementById("profileLanguages").textContent = `공부한 언어: ${data.languages}`;
-                            document.getElementById("profileInterest").textContent = `관심 분야: ${data.interest}`;
-                            document.getElementById("profileMovies").textContent = `좋아하는 영화: ${data.movies}`;
-                            document.getElementById("profileFoods").textContent = `좋아하는 음식: ${data.foods}`;
-                            document.getElementById("profileHobby").textContent = `취미: ${data.hobby}`;
+                            document.getElementById("profileGreeting").textContent = `안녕하세요. ${data.name}의 개인 페이지입니다.`;
+
+                            document.getElementById("profileName").textContent = `${cleanData.name}`;
+                            document.getElementById("profileMbti").textContent = `MBTI: ${cleanData.mbti}`;
+                            document.getElementById("profileContact").textContent = `블로그: ${cleanData.contact}`;
+                            document.getElementById("profileLanguages").textContent = `공부한 언어: ${cleanData.languages}`;
+                            document.getElementById("profileInterest").textContent = `관심 분야: ${cleanData.interest}`;
+                            document.getElementById("profileMovies").textContent = `좋아하는 영화: ${cleanData.movies}`;
+                            document.getElementById("profileFoods").textContent = `좋아하는 음식: ${cleanData.foods}`;
+                            document.getElementById("profileHobby").textContent = `취미: ${cleanData.hobby}`;
                             //console.log(data);
                             // 이미지 URL을 Firebase에서 가져와서 설정
                             const imageElement = document.getElementById("profileImage");
@@ -190,14 +209,14 @@
             const profileFoods = document.getElementById("profileFoods");
             const profileHobby = document.getElementById("profileHobby");
 
-            profileName.textContent = "이름: " + memberData.name;
+            profileName.textContent = memberData.name;
             profileMbti.textContent = "MBTI: " + memberData.mbti;
             profileContact.textContent = "블로그: " + memberData.contact;
             profileLanguages.textContent = "공부한 언어: " + memberData.languages;
             profileInterest.textContent = "관심 분야: " + memberData.interest;
             profileMovies.textContent = "좋아하는 영화: " + memberData.movies;
             profileFoods.textContent = "좋아하는 음식: " + memberData.foods;
-            profileHoobby.textContent = "취미: " + memberData.hobby;
+            profileFoods.textContent = "취미: " + memberData.hobby;
         }
 
         // 페이지 로드 시 해당 멤버의 데이터 불러오기
@@ -208,8 +227,8 @@
 
 <body>
     <div class="header">
-        <h1>Profile</h1>
-        <p>개인페이지입니다!</p>
+        <h2 id="profileName"> </h2>
+        <h5 id="profileGreeting"></h5>
     </div>
 
     <div class="content">
@@ -217,15 +236,13 @@
             <h2>5조</h2>
             <div class="profile-container">
                 <div class="profile-card">
-                    <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FApvIN%2FbtsLxMCg8HZ%2FrFBh7b3ycKTY4tOrdyhGzk%2Fimg.jpg" alt="Profile Photo">
-                    <h3 id="profileName"><strong>이름:</strong> </h3>
-                    <p id="profileMbti"><strong>MBTI:</strong> </p>
-                    <p id="profileLanguages"><strong>공부한 언어:</strong> </p>
-                    <p id="profileInterest"><strong>관심분야:</strong></p>
-                    <p id="profileMovies"><strong>좋아하는 영화:</strong></p>
-                    <p id="profileFoods"><strong>좋아하는 음식:</strong></p>
-                    <p id="profileHobby"><strong>취미:</strong></p>
-                    <a id="profileContact" href="https://cusk09.tistory.com/" target="_blank"></a>
+                    <p id="profileMbti">MBTI: </p>
+                    <p id="profileContact">블로그: </p>
+                    <p id="profileLanguages">공부한 언어: </p>
+                    <p id="profileInterest">관심 분야: </p>
+                    <p id="profileMovies">좋아하는 영화: </p>
+                    <p id="profileFoods">좋아하는 음식: </p>
+                    <p id="profileHobby">취미: </p>
                 </div>
             </div>
         </div>
