@@ -64,18 +64,27 @@
                         if (docSnap.exists()) {
                             const data = docSnap.data();
 
-                            // 업데이트: 멤버 이름으로 h4 내용 설정
-                            document.getElementById("profileGreeting").textContent = `안녕하세요. ${data.name}의 개인 페이지입니다.`;
+                            // 키 공백 제거
+                            const cleanData = {};
+                            for (const key in data) {
+                                if (data.hasOwnProperty(key)) {
+                                    const trimmedKey = key.trim(); // 키의 앞뒤 공백 제거
+                                    cleanData[trimmedKey] = data[key];
+                                }
+                            }
 
-                            document.getElementById("profileName").textContent = `${data.name}`;
-                            document.getElementById("profileMbti").textContent = `MBTI: ${data.mbti}`;
-                            document.getElementById("profileContact").textContent = `블로그: ${data.contact}`;
-                            document.getElementById("profileLanguages").textContent = `공부한 언어: ${data.languages}`;
-                            document.getElementById("profileInterest").textContent = `관심 분야: ${data.interest}`;
-                            document.getElementById("profileMovies").textContent = `좋아하는 영화: ${data.movies}`;
-                            document.getElementById("profileFoods").textContent = `좋아하는 음식: ${data.foods}`;
-                            document.getElementById("profileHobby").textContent = `취미: ${data.hobby}`;
-                            //console.log(data);
+                            // 업데이트: 멤버 이름으로 h4 내용 설정
+                            document.getElementById("profileGreeting").textContent = `안녕하세요. ${cleanData.name}의 개인 페이지입니다.`;
+
+                            document.getElementById("profileName").textContent = `${cleanData.name}`;
+                            document.getElementById("profileMbti").textContent = `MBTI: ${cleanData.mbti}`;
+                            document.getElementById("profileContact").textContent = `블로그: ${cleanData.contact}`;
+                            document.getElementById("profileLanguages").textContent = `공부한 언어: ${cleanData.languages}`;
+                            document.getElementById("profileInterest").textContent = `관심 분야: ${cleanData.interest}`;
+                            document.getElementById("profileMovies").textContent = `좋아하는 영화: ${cleanData.movies}`;
+                            document.getElementById("profileFoods").textContent = `좋아하는 음식: ${cleanData.foods}`;
+                            document.getElementById("profileHobby").textContent = `취미: ${cleanData.hobby}`;
+                            console.log(data);
                             // 이미지 URL을 Firebase에서 가져와서 설정
                             const imageElement = document.getElementById("profileImage");
                             imageElement.src = data.image; // Firestore에서 가져온 이미지 URL을 사용
