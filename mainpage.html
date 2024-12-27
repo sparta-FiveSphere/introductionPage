@@ -5,202 +5,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FIVESPHERE - Team Introduction</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
-    <style>
-        body {
-            margin: 0;
-            font-family: 'Gowun Dodum', serif;
-            background-color: #f5f5f5;
-            color: #333;
-        }
-
-        .header {
-            text-align: center;
-            padding: 50px 20px;
-            background: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRxPVkBp1t97IFFGxMOWw_cOpM2W5wvlXHvXA&s') center/cover;
-            color: white;
-        }
-
-        .header h1 {
-            font-size: 3em;
-            margin: 0;
-        }
-
-        /*팀 카드 관련*/
-        .d-flex {
-            width: 1500px;
-            margin: 30px auto 30px auto;
-        }
-
-        .content {
-            max-width: 1200px;
-            margin: 20px auto;
-            padding: 20px;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        .section {
-            margin: 30px auto 30px auto;
-        }
-
-
-        .team-info {
-            padding-left: 300px;
-            padding-right: 300px;
-
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            align-items: center;
-        }
-
-        .section h2 {
-            font-size: 2em;
-            margin-bottom: 15px;
-            border-bottom: 2px solid #333;
-            display: inline-block;
-        }
-
-        .rules-list,
-        .goals-list {
-            padding-left: 20px;
-        }
-
-        .rules-list li,
-        .goals-list li {
-            margin-bottom: 10px;
-            line-height: 1.6;
-        }
-
-        .card {
-            flex: 1 1 calc(33.333% - 20px);
-            max-width: calc(33.333% - 20px);
-            background: #f9f9f9;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            padding: 15px;
-            text-align: center;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            margin-right: 20px;
-        }
-
-        .btn-primary {
-            margin-top: 20px;
-        }
-
-        .card h3 {
-            margin: 10px 0 5px;
-        }
-
-        .card p {
-            margin: 0;
-        }
-
-        @media (max-width: 768px) {
-            .card {
-                flex: 1 1 calc(50% - 20px);
-                max-width: calc(50% - 20px);
-            }
-        }
-
-        @media (max-width: 480px) {
-            .card {
-                flex: 1 1 100%;
-                max-width: 100%;
-            }
-        }
-    </style>
-    <script type="module">
-        // Firebase SDK 라이브러리 가져오기
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
-        import { collection, addDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
-        import { getDocs } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
-        import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
-
-        // Firebase 구성 정보 설정
-        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-        const firebaseConfig = {
-            apiKey: "AIzaSyAZbTk4PDelAFRCNx_TV057LapBxOA64Ys",
-            authDomain: "five-spheres.firebaseapp.com",
-            projectId: "five-spheres",
-            storageBucket: "five-spheres.firebasestorage.app",
-            messagingSenderId: "766256056992",
-            appId: "1:766256056992:web:c8081af4febae25de957c5",
-            measurementId: "G-CW9FZJGY61"
-        };
-
-        // Firebase 인스턴스 초기화
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-
-        // URL 파라미터에서 document_id 가져오기
-        const urlParams = new URLSearchParams(window.location.search);
-        const documentId = urlParams.get("document_id");
-
-        // Firestore에서 데이터 가져오는 함수
-        async function getMemberData(documentId) {
-            if (!documentId) {
-                console.error("Invalid document ID.");
-                return;
-            }
-
-            try {
-                const docRef = doc(db, "profile", documentId);
-                const docSnap = await getDoc(docRef);
-
-                if (docSnap.exists()) {
-                    const memberData = docSnap.data();
-                    displayMemberData(memberData); // 데이터 처리 함수 호출
-                } else {
-                    console.error("No such document!");
-                }
-            } catch (error) {
-                console.error("Error getting document:", error);
-            }
-        }
-
-        // 가져온 데이터를 HTML에 표시하는 함수
-        function displayMemberData(memberData) {
-            const profileName = document.getElementById("profileName");
-            const profileMbti = document.getElementById("profileMbti");
-            const profileContact = document.getElementById("profileContact");
-            const profileLanguages = document.getElementById("profileLanguages");
-            const profileInterest = document.getElementById("profileInterest");
-            const profileMovies = document.getElementById("profileMovies");
-            const profileFoods = document.getElementById("profileFoods");
-            const profileHobby = document.getElementById("profileHobby");
-
-            // 데이터 표시
-            profileName.textContent = memberData.name;
-            profileMbti.textContent = "MBTI: " + memberData.mbti;
-            profileContact.textContent = "블로그: " + memberData.contact;
-            profileLanguages.textContent = "공부한 언어: " + memberData.languages;
-            profileInterest.textContent = "관심 분야: " + memberData.interest;
-            profileMovies.textContent = "좋아하는 영화: " + memberData.movies;
-            profileFoods.textContent = "좋아하는 음식: " + memberData.foods;
-            profileFoods.textContent = "취미: " + memberData.hobby;
-        }
-
-        // 페이지 로드 시 해당 멤버의 데이터 불러오기
-        getMemberData(documentId);
-    </script>
+    <link rel="stylesheet" href="/style.css" />
 </head>
 
-
 <body>
-
     <div class="header">
-        <!-- 팀 이름 -->
         <h1 class="display-5 fw-bold">FIVESPHERE</h1>
         <p>스파르타 코딩클럽</p>
     </div>
 
     <div>
-        <!-- 팀 소개 -->
         <div class="team-info">
             <div class="section">
                 <h2>Team Rules</h2>
@@ -210,7 +28,7 @@
                     <li> 실수나 문제가 있어도 남 탓하지말고 문제를 해결해 나가는데 집중하겠습니다.</li>
                     <li> 소통을 중요시하므로 대화를 할 때는 캠도 켜고 화면 공유도 잘 하겠습니다.</li>
                     <li> 끝까지 최선을 다하며 파이팅 하겠습니다!</li>
-                    </ul>
+                </ol>
             </div>
 
             <div class="section">
@@ -222,64 +40,152 @@
                     <li> TIL 매일 쓰기</li>
                     <li> 1일 1 TIL 1 알고리즘</li>
                     <li> 성공적인 팀 프로젝트 하기</li>
-                    </ul>
+                </ol>
             </div>
         </div>
 
+        <div id="teamCard" class="d-flex flex-row"></div>
 
-        <!-- 멤버 카드 -->
-        <!-- 카드 클릭 시 개인 페이지로 이동 -->
-        <div id="teamCard" class="d-flex flex-row">
-            <div class="card" style="width: 18rem;">
-                <img src="https://yt3.googleusercontent.com/kIwffqmzJJiPxzk60GJQoNONu3RGQCBGlzlWhA8AEFYg8IQg9xp_vzroskXQ3dIR64aNt7a1eQ=s900-c-k-c0x00ffffff-no-rj"
-                    class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">김수환</h5>
-                    <p class="card-text">팀장</p>
-                    <a href="pro.html?document_id=1" class="btn btn-primary">상세 정보</a>
-                </div>
+        <div class="visitbook-container">
+            <h1> 방명록 </h1>
+
+            <div class="input-container">
+                <input type="text" class="form-control" id="nickname" placeholder="닉네임">
+                <input type="text" class="form-control" id="comment" placeholder="남길글">
+                <button class="btn btn-secondary" type="button" onclick="addComment()">등록</button>
             </div>
-            <div class="card" style="width: 18rem;">
-                <img src="https://yt3.googleusercontent.com/kIwffqmzJJiPxzk60GJQoNONu3RGQCBGlzlWhA8AEFYg8IQg9xp_vzroskXQ3dIR64aNt7a1eQ=s900-c-k-c0x00ffffff-no-rj"
-                    class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">손미진</h5>
-                    <p class="card-text">팀원</p>
-                    <a href="pro.html?document_id=2" class="btn btn-primary">상세 정보</a>
-                </div>
-            </div>
-            <div class="card" style="width: 18rem;">
-                <img src="https://yt3.googleusercontent.com/kIwffqmzJJiPxzk60GJQoNONu3RGQCBGlzlWhA8AEFYg8IQg9xp_vzroskXQ3dIR64aNt7a1eQ=s900-c-k-c0x00ffffff-no-rj"
-                    class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">봉수현</h5>
-                    <p class="card-text">팀원</p>
-                    <a href="pro.html?document_id=3" class="btn btn-primary">상세 정보</a>
-                </div>
-            </div>
-            <div class="card" style="width: 18rem;">
-                <img src="https://yt3.googleusercontent.com/kIwffqmzJJiPxzk60GJQoNONu3RGQCBGlzlWhA8AEFYg8IQg9xp_vzroskXQ3dIR64aNt7a1eQ=s900-c-k-c0x00ffffff-no-rj"
-                    class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">정재민</h5>
-                    <p class="card-text">팀원</p>
-                    <a href="pro.html?document_id=4" class="btn btn-primary">상세 정보</a>
-                </div>
-            </div>
-            <div class="card" style="width: 18rem;">
-                <img src="https://yt3.googleusercontent.com/kIwffqmzJJiPxzk60GJQoNONu3RGQCBGlzlWhA8AEFYg8IQg9xp_vzroskXQ3dIR64aNt7a1eQ=s900-c-k-c0x00ffffff-no-rj"
-                    class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">조성준</h5>
-                    <p class="card-text">팀원</p>
-                    <a href="pro.html?document_id=5" class="btn btn-primary">상세 정보</a>
-                </div>
+
+            <div class="Cards">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Nickname</th>
+                            <th scope="col">Comment</th>
+                            <th scope="col">Date</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody id="record">
+                    </tbody>
+                </table>
             </div>
         </div>
-        <div>
-            <!-- 방명록 -->
-        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+        import { getFirestore, doc, getDoc, collection, addDoc, getDocs, deleteDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAZbTk4PDelAFRCNx_TV057LapBxOA64Ys",
+            authDomain: "five-spheres.firebaseapp.com",
+            projectId: "five-spheres",
+            storageBucket: "five-spheres.firebasestorage.app",
+            messagingSenderId: "766256056992",
+            appId: "1:766256056992:web:c8081af4febae25de957c5",
+            measurementId: "G-CW9FZJGY61"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        const teamMembers = [
+            { name: "김수환", role: "팀장", documentId: 1 },
+            { name: "손미진", role: "팀원", documentId: 2 },
+            { name: "봉수현", role: "팀원", documentId: 3 },
+            { name: "정재민", role: "팀원", documentId: 4 },
+            { name: "조성준", role: "팀원", documentId: 5 }
+        ];
+
+        const teamCardContainer = document.getElementById('teamCard');
+        const imageUrl = "https://yt3.googleusercontent.com/kIwffqmzJJiPxzk60GJQoNONu3RGQCBGlzlWhA8AEFYg8IQg9xp_vzroskXQ3dIR64aNt7a1eQ=s900-c-k-c0x00ffffff-no-rj";
+
+        teamMembers.forEach(member => {
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.style.width = '18rem';
+
+            card.innerHTML = `
+                <img src="${imageUrl}" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">${member.name}</h5>
+                    <p class="card-text">${member.role}</p>
+                    <a href="profile.html?document_id=${member.documentId}" class="btn btn-primary">상세 정보</a>
+                </div>
+            `;
+
+            teamCardContainer.appendChild(card);
+        });
+
+        $(document).ready(async () => {
+            let rowCount = 1;
+            const docs = await getDocs(collection(db, "visits"));
+
+            docs.forEach((doc) => {
+                const row = doc.data();
+                const nickname = row['nickname'];
+                const comment = row['comment'];
+                const date = row['date'];
+
+                const temp_tr = `
+                    <tr id="row-${doc.id}">
+                        <th scope="row">${rowCount}</th>
+                        <td>${nickname}</td>
+                        <td>${comment}</td>
+                        <td>${date}</td>
+                        <td>
+                            <button type="button" class="btn-close" aria-label="Close" onclick="deleteComment('${doc.id}')"></button>
+                        </td>
+                    </tr>
+                `;
+                rowCount++;
+                $('#record').append(temp_tr);
+            });
+        });
+
+        async function addComment() {
+            let nickname = $('#nickname').val();
+            let comment = $('#comment').val();
+
+            if (nickname === "" || comment === "") {
+                alert("닉네임과 댓글을 입력해주세요.");
+                return;
+            }
+
+            var date = new Date();
+            let today = `${date.getFullYear()}.${date.getMonth() + 1}.${date.getDate()}`;
+
+            const docData = {
+                nickname: nickname,
+                comment: comment,
+                date: today
+            };
+
+            try {
+                await addDoc(collection(db, "visits"), docData);
+                $('#nickname').val("");
+                $('#comment').val("");
+                alert("등록되었습니다.");
+                location.reload();
+            } catch (error) {
+                console.error("Error adding document: ", error);
+            }
+        }
+
+        async function deleteComment(docId) {
+            try {
+                await deleteDoc(doc(db, "visits", docId));
+                $(`#row-${docId}`).remove();
+                alert("삭제되었습니다.");
+            } catch (error) {
+                console.error("Error deleting document: ", error);
+            }
+        }
+
+        window.addComment = addComment;
+        window.deleteComment = deleteComment;
+    </script>
 </body>
-</div>
 
 </html>
