@@ -111,24 +111,24 @@
              }
         ];
 
-        const teamCardContainer = document.getElementById('teamCard');
-        
-
-        teamMembers.forEach(member => {
-            const card = document.createElement('div');
-            card.className = 'card';
-            card.style.width = '18rem';
-
-            card.innerHTML = `
-                <img src="${member.imageUrl}" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">${member.name}</h5>
-                    <p class="card-text">${member.role}</p>
-                    <a href="profile.html?document_id=${member.documentId}" class="btn btn-primary">상세 정보</a>
-                </div>
-            `;
-
-            teamCardContainer.appendChild(card);
+        document.addEventListener("DOMContentLoaded", () => {
+            const teamCardContainer = document.getElementById('teamCard');
+            teamMembers.forEach(member => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.style.width = '18rem';
+    
+                card.innerHTML = `
+                    <img src="${member.imageUrl}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">${member.name}</h5>
+                        <p class="card-text">${member.role}</p>
+                        <a href="profile.html?document_id=${member.documentId}" class="btn btn-primary">상세 정보</a>
+                    </div>
+                `;
+    
+                teamCardContainer.appendChild(card);
+            });
         });
 
         $(document).ready(async () => {
